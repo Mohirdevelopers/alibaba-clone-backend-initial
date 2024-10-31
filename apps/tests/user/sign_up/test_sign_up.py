@@ -8,11 +8,12 @@ User = get_user_model()
 @pytest.fixture
 def signup_data(request, user_factory, mocker):
     password = 'jsh767jHJHdskd'
+    phone_number = "+998911110011"
     user = user_factory.create(password=password, is_verified=False)
     resp = {
         'first_name': user.first_name,
         'last_name': user.last_name,
-        'phone_number': user.phone_number,
+        'phone_number': phone_number,
         'email': user.email,
         'user_trade_role': 'buyer',
         'gender': user.gender,
