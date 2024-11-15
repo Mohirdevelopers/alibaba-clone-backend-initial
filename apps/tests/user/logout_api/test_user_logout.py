@@ -44,19 +44,22 @@ def logout_data(request, user_factory, api_client, tokens):
 def test_logout(logout_data, mocker, fake_redis, request, tokens):
     status_code, client, user, access = logout_data()
     test_name = request.node.name
-    mocker.patch('share.services.TokenService.get_redis_client', lambda: fake_redis)
+    mocker.patch('share.services.TokenService.get_redis_client', return_value=fake_redis)
 
     if test_name == 'test_logout[valid_with_stored_tokens]':
         _, refresh = tokens(user)
-        access_token_key = f'user:{user.id}:access'
-        refresh_token_key = f'user:{user.id}:refresh'
+        access_token_key = f'user:{user.id}:{TokenType.ACCESS}'
+        refresh_token_key = f'user:{user.id}:{TokenType.REFRESH}'
 
         fake_redis.sadd(access_token_key, b'fake_token')
         fake_redis.sadd(refresh_token_key, b'fake_token')
 
-    mocker.patch('share.services.TokenService.add_token_to_redis',
-                 side_effect=lambda user_id, token, token_type, lifetime: fake_redis.sadd(
-                     f'user:{user_id}:{token_type}', b'fake_token'))
+    mocker.patch(
+        'share.services.TokenService.add_token_to_redis',
+        side_effect=lambda user_id, token, token_type, expire_time: fake_redis.sadd(
+            f'user:{user_id}:{token_type}', b'fake_token'
+        )
+    )
 
     resp = client.post('/api/users/logout/')
     assert resp.status_code == status_code
