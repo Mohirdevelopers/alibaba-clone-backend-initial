@@ -4,7 +4,7 @@ Boshlang’ich sozlamalar ichida quyidagi fayllar oldindan yozib tayyorlab qo’
 
 - **Ushbu qatorda qaysi repodan yangilanishlarni olish kerakligini ko'rsatadi va qaysi originga olishni**
     ```
-    git remote add upstream https://github.com/Mohirdevelopers/medium-clone-backend-initial.git
+    git remote add upstream https://github.com/Mohirdevelopers/alibaba-clone-backend-initial.git
     ```
 
 - **Biz upstreamga fetch (olib kelish) buyrug'iri berdik**
@@ -14,5 +14,5 @@ Boshlang’ich sozlamalar ichida quyidagi fayllar oldindan yozib tayyorlab qo’
 
 - **Upstreamdagi ko'rsatilgan papkalardagi uzgarishlarni main dagi shu papkalarga o'tkazish buyrug'iri**
    ```
-   git checkout upstream/main -- _docs_for_use tests .github/workflows/unittest-checker.yaml .deploy Dockerfile docker-compose.yaml pytest.ini
+   git checkout upstream/main -- apps/tests .github/workflows/unittest-checker.yaml .deploy Dockerfile docker-compose.yaml pytest.ini
    ```
