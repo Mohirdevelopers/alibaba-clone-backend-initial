@@ -1,6 +1,6 @@
 import pytest
 
-from user.models import Groups
+from user.models import Group
 
 
 @pytest.fixture
