@@ -31,4 +31,6 @@ class OrderItemFactory(factory.django.DjangoModelFactory):
     order = factory.SubFactory('tests.factories.order_factory.OrderFactory')
     product = factory.SubFactory('tests.factories.product_factory.ProductFactory')
     quantity = factory.Faker('pyint', min_value=1, max_value=10)
-    price = factory.Faker('pyfloat', left_digits=2, right_digits=2, positive=True)
+    price = factory.Faker(
+        'pydecimal', left_digits=4, right_digits=2, positive=True, min_value=1
+    )

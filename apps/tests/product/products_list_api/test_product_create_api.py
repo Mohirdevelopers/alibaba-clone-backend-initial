@@ -44,8 +44,9 @@ class TestProductCreateAPI:
         response = self.client.post(self.url, data=payload, format='json')
         assert response.status_code == expected_status
         if response.status_code == status.HTTP_201_CREATED:
-            assert response.json()['title'] == payload['title']
-            assert response.json()['price'] == payload['price']
+            response_data = response.json()
+            assert response_data['title'] == payload['title']
+            assert response_data['price'] == f"{payload['price']:.2f}"
 
     @pytest.mark.parametrize("payload, expected_status", [
         ({}, status.HTTP_400_BAD_REQUEST),
@@ -112,3 +113,4 @@ class TestProductCreateAPI:
         assert response_data['quantity'] == payload['quantity']
         assert len(response_data['colors']) == len(payload['colors'])
         assert len(response_data['sizes']) == len(payload['sizes'])
+        assert response_data['price'] == f"{payload['price']:.2f}"

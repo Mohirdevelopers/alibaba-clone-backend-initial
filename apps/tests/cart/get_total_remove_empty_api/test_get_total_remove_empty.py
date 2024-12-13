@@ -1,4 +1,5 @@
 import pytest
+from decimal import Decimal
 from rest_framework import status
 from cart.models import Cart, CartItem
 from user.models import Group
@@ -32,7 +33,7 @@ class TestCartViews:
         assert response.status_code == status.HTTP_200_OK
         assert response.data['total_items'] == 2
         assert response.data['total_quantity'] == 3
-        assert response.data['total_price'] == pytest.approx(40.67)
+        assert response.data['total_price'] == Decimal("40.67")
 
     def test_get_cart_total_view_no_cart(self, api_client):
         client = api_client(token=self.access)
